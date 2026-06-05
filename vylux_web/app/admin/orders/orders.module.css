@@ -1,0 +1,266 @@
+.container {
+  padding: 14px;
+  background: #f6f7fb;
+  min-height: 100vh;
+ 
+}
+
+/* ================= TITLE ================= */
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+/* ================= TOP BAR ================= */
+.topBar {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 12px;
+  position: sticky;
+  top: 0;
+  background: #f6f7fb;
+  padding-bottom: 8px;
+  z-index: 10;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* search */
+.search {
+  flex: 1;
+  min-width: 180px;
+  padding: 11px 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 13px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.search:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
+}
+
+/* dropdown */
+.select {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 13px;
+  outline: none;
+  background: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.select:hover {
+  border-color: #111827;
+}
+
+/* dropdown group */
+.topBar > div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+/* ================= LIST ================= */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  max-height: calc(100vh - 150px);
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* scrollbar */
+.list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 10px;
+}
+
+/* ================= CARD ================= */
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-1px);
+}
+
+/* ================= HEADER ================= */
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  gap: 10px;
+}
+
+.orderId {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.smallText {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+/* ================= RIGHT ================= */
+.right {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.amount {
+  font-weight: 800;
+  font-size: 14px;
+  color: #111827;
+}
+
+/* ================= STATUS ================= */
+.status {
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  background: #f3f4f6;
+  color: #374151;
+  transition: 0.2s;
+}
+
+.status:hover {
+  background: #e5e7eb;
+}
+
+/* ================= DETAILS ================= */
+.details {
+  margin-top: 10px;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.section {
+  margin-bottom: 10px;
+}
+
+.section h4 {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #111827;
+}
+
+.section p {
+  font-size: 12px;
+  color: #4b5563;
+  margin: 2px 0;
+}
+
+/* ================= ITEMS ================= */
+.itemRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 8px 0;
+  border-bottom: 1px dashed #e5e7eb;
+}
+
+.itemName {
+  font-weight: 600;
+  font-size: 13px;
+  color: #111827;
+}
+
+/* ================= LOADING ================= */
+.loading,
+.loadingSmall {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+/* ================= RESET BUTTON ================= */
+.resetBtn {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: none;
+  background: #ef4444;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.resetBtn:hover {
+  background: #dc2626;
+}
+
+/* ================= PAGINATION ================= */
+.paginationBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  margin-top: 14px;
+  padding: 10px;
+
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  flex-wrap: wrap;
+}
+
+.paginationBar button {
+  min-width: 38px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.paginationBar button:hover {
+  background: #111827;
+  color: white;
+  border-color: #111827;
+}
+
+.paginationBar button.active {
+  background: #111827;
+  color: #fff;
+  border-color: #111827;
+}
+
+.paginationBar button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+

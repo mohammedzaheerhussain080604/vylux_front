@@ -1,0 +1,254 @@
+.container {
+  background: #f7f7f7;
+  min-height: 100vh;
+  padding-bottom: 40px;
+  font-family: Arial, sans-serif;
+  color: #0f172a;
+}
+
+/* ================= HEADER ================= */
+
+.header {
+  background: #031225;
+  color: white;
+  padding: 18px;
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* ================= SECTION ================= */
+
+.section {
+  background: #fff;
+  margin: 12px;
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.sectionTop {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sectionTop h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.sectionTop p {
+  color: #666;
+  font-size: 12px;
+}
+
+/* ================= FORM ================= */
+
+.formCard {
+  margin-top: 14px;
+  border: 1px solid #ececec;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.formCard h3 {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.formGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.formGrid input {
+  height: 44px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 0 12px;
+  font-size: 13px;
+}
+
+.submitBtn {
+  width: 100%;
+  margin-top: 12px;
+  height: 44px;
+  background: #ffc107;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ================= TITLES ================= */
+
+.previewTitle {
+  margin: 16px 0 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ================= HORIZONTAL SCROLL ================= */
+
+.horizontalScroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* scrollbar */
+.horizontalScroll::-webkit-scrollbar {
+  height: 5px;
+}
+
+.horizontalScroll::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+/* ================= BANNER CARD ================= */
+
+.bannerCard {
+  flex: 0 0 auto;
+  width: 240px;
+  background: white;
+  border: 1px solid #ececec;
+  border-radius: 14px;
+  padding: 10px;
+  scroll-snap-align: start;
+}
+
+.bannerImage {
+  height: 120px;
+  background: #f1f1f1;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bannerInfo {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bannerInfo h4 {
+  font-size: 14px;
+}
+
+.bannerInfo p {
+  font-size: 12px;
+  color: #666;
+}
+
+.delete {
+  margin-top: 6px;
+  width: 100%;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid #ffd4d4;
+  color: red;
+  background: #fff;
+  font-size: 12px;
+}
+
+/* ================= CATEGORY CARD ================= */
+
+.categoryCard {
+  flex: 0 0 auto;
+  width: 170px;
+  background: white;
+  border: 1px solid #ececec;
+  border-radius: 12px;
+  padding: 10px;
+  scroll-snap-align: start;
+}
+
+.categoryImage {
+  height: 90px;
+  background: #f1f1f1;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.categoryCard h4 {
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+.categoryCard p {
+  font-size: 11px;
+  color: #666;
+}
+
+.categoryCard button {
+  width: 100%;
+  height: 34px;
+  margin-top: 8px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: white;
+  font-size: 12px;
+}
+
+/* ================= GRID (fallback if needed) ================= */
+
+.categoryGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+/* ================= TABLE STYLE (if used later) ================= */
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+/* ================= MOBILE RESPONSIVE ================= */
+
+@media (min-width: 600px) {
+  .sectionTop {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .formGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .bannerCard {
+    width: 260px;
+  }
+
+  .categoryCard {
+    width: 200px;
+  }
+}
+
+@media (min-width: 900px) {
+  .section {
+    margin: 16px auto;
+    max-width: 1100px;
+  }
+
+  .formGrid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .bannerCard {
+    width: 280px;
+  }
+}

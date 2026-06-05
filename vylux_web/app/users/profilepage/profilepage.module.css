@@ -1,0 +1,292 @@
+.container {
+  min-height: 100vh;
+  background: #f4f7fb;
+  padding: 12px;
+  padding-bottom: 100px;
+  margin-top: 70px;
+  margin-bottom: 70px;
+}
+
+/* ================= HEADER ================= */
+
+.headerCard {
+  background: linear-gradient(
+    135deg,
+    #0b8a3c,
+    #12b76a
+  );
+
+  border-radius: 22px;
+  padding: 24px 18px;
+  text-align: center;
+  margin-bottom: 14px;
+
+  box-shadow: 0 10px 25px rgba(11, 138, 60, 0.2);
+}
+
+.avatar {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.18);
+
+  color: white;
+  font-size: 30px;
+  font-weight: 700;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto 14px;
+
+  border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.headerCard h2 {
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.headerCard p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 12px;
+}
+
+.badge {
+  display: inline-block;
+  margin-top: 12px;
+
+  background: white;
+  color: #0b8a3c;
+
+  padding: 7px 14px;
+  border-radius: 30px;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* ================= CARDS ================= */
+
+.card {
+  background: white;
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 14px;
+
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.05);
+}
+
+.card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #111827;
+}
+
+/* ================= PROFILE ROW ================= */
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  padding: 14px 0;
+
+  border-bottom: 1px solid #edf0f3;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.label {
+  min-width: 110px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  color: #6b7280;
+}
+
+.value {
+  flex: 1;
+  text-align: right;
+}
+
+.value span {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+  word-break: break-word;
+}
+
+/* ================= INPUT ================= */
+
+.input {
+  width: 100%;
+  height: 44px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  padding: 0 12px;
+
+  background: #fafafa;
+
+  font-size: 14px;
+  color: #111827;
+
+  outline: none;
+
+  text-align: left;
+
+  transition: 0.3s;
+}
+
+.input:focus {
+  border-color: #0b8a3c;
+  background: white;
+
+  box-shadow: 0 0 0 4px
+    rgba(11, 138, 60, 0.1);
+}
+
+.textarea {
+  width: 100%;
+  min-height: 90px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  padding: 12px;
+
+  background: #fafafa;
+
+  font-size: 14px;
+  color: #111827;
+
+  resize: none;
+
+  outline: none;
+
+  transition: 0.3s;
+}
+
+.textarea:focus {
+  border-color: #0b8a3c;
+  background: white;
+
+  box-shadow: 0 0 0 4px
+    rgba(11, 138, 60, 0.1);
+}
+
+/* ================= BUTTONS ================= */
+
+.primaryBtn {
+  width: 100%;
+  height: 48px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: linear-gradient(
+    135deg,
+    #0b8a3c,
+    #12b76a
+  );
+
+  color: white;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  margin-bottom: 10px;
+
+  cursor: pointer;
+}
+
+.primaryBtn:active {
+  transform: scale(0.98);
+}
+
+.secondaryBtn {
+  width: 100%;
+  height: 48px;
+
+  border: 1px solid #dbe3ec;
+  border-radius: 14px;
+
+  background: white;
+
+  color: #111827;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  margin-bottom: 10px;
+
+  cursor: pointer;
+}
+
+.secondaryBtn:active {
+  transform: scale(0.98);
+}
+
+.logoutBtn {
+  width: 100%;
+  height: 48px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: linear-gradient(
+    135deg,
+    #ef4444,
+    #dc2626
+  );
+
+  color: white;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.logoutBtn:active {
+  transform: scale(0.98);
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 480px) {
+  .row {
+    gap: 8px;
+  }
+
+  .label {
+    min-width: 95px;
+    font-size: 12px;
+  }
+
+  .value span {
+    font-size: 13px;
+  }
+}
+
+/* ================= DESKTOP ================= */
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

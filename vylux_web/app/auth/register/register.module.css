@@ -1,0 +1,167 @@
+.container {
+  min-height: 100vh;
+  background: #ffffff;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 30px;
+}
+
+.logoWrapper {
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 280px;
+  height: auto;
+  object-fit: contain;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #000;
+  margin: 0;
+  text-align: center;
+}
+
+.subtitle {
+  margin-top: 12px;
+  margin-bottom: 34px;
+
+  font-size: 13px;
+  color: #7d7d7d;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.form {
+  width: 100%;
+  max-width: 380px;
+}
+
+.inputGroup {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  height: 55px;
+
+  border: 1.5px solid #eee3e3;
+  border-radius: 16px;
+   box-shadow:0 2px 8px rgba(0, 0, 0, 0.19);
+
+  background: #fff;
+
+  margin-bottom: 18px;
+}
+
+.icon {
+  margin-left: 24px;
+
+  font-size: 24px;
+  color: #7a7a7a;
+
+  flex-shrink: 0;
+}
+
+.input {
+  flex: 1;
+
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+
+  padding: 0 16px;
+
+  font-size: 18px;
+  color: #222;
+}
+
+.input::placeholder {
+  color: #8b8b8b;
+}
+
+.eyeButton {
+  border: none;
+  background: transparent;
+
+  width: 56px;
+  height: 56px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  color: #7a7a7a;
+  font-size: 24px;
+}
+
+.registerBtn {
+  width: 100%;
+  height: 64px;
+
+  margin-top: 20px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: #f9be00;
+
+  color: #000;
+  font-size: 20px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.registerBtn:hover {
+  background: #f0b400;
+}
+
+.footer {
+  margin-top: 34px;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 16px;
+  color: #707070;
+}
+
+.loginBtn {
+  background: none;
+  border: none;
+
+  color: #f9be00;
+  font-size: 16px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .container {
+    padding-top: 100px;
+  }
+
+  .logo {
+    width: 260px;
+  }
+
+  .form {
+    max-width: 420px;
+  }
+}

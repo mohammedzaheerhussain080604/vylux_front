@@ -1,0 +1,113 @@
+.container {
+  min-height: 100vh;
+  background: #f5f7fb;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  color: #0f172a;
+  margin-bottom: 70px;
+}
+
+/* HEADER */
+.header {
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  font-size: 26px;
+  color: #0ea5e9;
+}
+
+.header p {
+  color: #64748b;
+}
+
+/* ================= KPI GRID (3 PER ROW FIXED) ================= */
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  padding: 16px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 14px;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.card b {
+  display: block;
+  margin-top: 6px;
+  font-size: 18px;
+  color: #0ea5e9;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: #0ea5e9;
+  box-shadow: 0 6px 18px rgba(14,165,233,0.15);
+}
+
+/* ================= SECTION ================= */
+.section {
+  margin-top: 30px;
+}
+
+.section h2 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #0f172a;
+}
+
+/* ================= TABLE ================= */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+.table th {
+  background: #f1f5f9;
+  text-align: left;
+  padding: 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.table td {
+  padding: 12px;
+  border-top: 1px solid #e2e8f0;
+  font-size: 13px;
+}
+
+.table tr:hover {
+  background: #f8fafc;
+}
+
+/* ================= RECENT ORDERS SCROLL ONLY ================= */
+.scrollBox {
+  max-height: 280px;
+  overflow-y: auto;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+/* ================= LOADING / ERROR ================= */
+.loading,
+.error {
+  padding: 20px;
+  font-size: 14px;
+}
+
+.error {
+  color: red;
+}
+

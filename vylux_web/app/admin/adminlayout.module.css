@@ -1,0 +1,27 @@
+
+/* FULL SCREEN LAYOUT */
+.adminLayout {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+}
+
+/* HEADER (FIXED TOP) */
+.adminLayout header {
+  flex-shrink: 0;
+}
+
+/* SCROLL AREA (ONLY CONTENT SCROLLS) */
+.mainContent {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #f9f9f9;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* FOOTER (FIXED BOTTOM) */
+.adminLayout footer {
+  flex-shrink: 0;
+}

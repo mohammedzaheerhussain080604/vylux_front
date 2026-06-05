@@ -1,0 +1,14 @@
+# Frontend
+vylux_lighting/node_modules
+vylux_lighting/.next
+
+# Backend
+backend/node_modules
+
+# Env files
+.env
+.env.local
+.env.production
+
+# Logs
+*.log

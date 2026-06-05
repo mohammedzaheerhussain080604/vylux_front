@@ -1,0 +1,522 @@
+
+
+.head {
+  font-size: 20px;
+  text-align: center;
+  margin-top: 5px;
+ 
+}
+
+.prodecont {
+  border: 1px solid rgb(219, 206, 206);
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.phead {
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.proname {
+  margin-top: 10px;
+}
+
+.lhead {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.pname {
+  margin-top: 10px;
+  width: 350px;
+  height: 40px;
+  padding-left: 10px;
+  border-radius: 5px;
+  border: 1px solid rgb(217, 195, 195);
+}
+
+.pname::placeholder {
+  padding-left: 10px;
+}
+
+.pdiv {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* row layout */
+.row {
+  display: flex;
+  gap: 15px;
+}
+
+/* each field takes equal space */
+.field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* input + select */
+.pdin {
+  width: 100%;
+  height: 40px;
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+}
+
+.pdin:focus {
+  border-color: green;
+}
+
+/* upload container */
+.imageUploadContainer {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.subHead {
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+/* upload box */
+.uploadBox {
+  width: 100%;
+  max-width: 400px;
+  border: 2px dashed #dac8c8;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  cursor: pointer;
+  gap: 10px;
+  transition: border 0.2s;
+}
+
+.uploadBox:hover {
+  border-color: green;
+}
+
+.uploadText {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.uploadText p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.uploadPreviewImg {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+/* GALLERY */
+.galleryPreview {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.galleryItem {
+  position: relative;
+}
+
+.galleryItem img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+}
+
+.galleryItem button {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 18px;
+  height: 18px;
+  border: none;
+  background: red;
+  color: white;
+  font-size: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* FULLSCREEN */
+.fullScreen {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.fullScreen img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+/* BASICS */
+.basics {
+  border: 1px solid rgb(240, 231, 231);
+  margin: 10px;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.bhead {
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.bdecard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.bdehead {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.bdein {
+  width: 100px;
+  margin-right: 100px;
+  height: 30px;
+  border-radius: 7px;
+  padding-left: 10px;
+}
+
+.bdein::placeholder {
+  padding-left: 10px;
+}
+
+/* NEXT BUTTON */
+.nextpage {
+  margin: 10px;
+  width: 390px;
+  height: 50px;
+  font-size: 20px;
+  background-color: green;
+  color: #ddd;
+  border-radius: 10px;
+  border: none;
+}
+
+/* BASICS */
+.basics {
+  border: 1px solid rgb(240, 231, 231);
+  margin: 10px;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.bhead {
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.bdecard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.bdehead {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.bdein {
+  width: 100px;
+  margin-right: 100px;
+  height: 30px;
+  border-radius: 7px;
+  padding-left: 10px;
+}
+
+.bdein::placeholder {
+  padding-left: 10px;
+}
+
+/* NEXT BUTTON */
+.nextpage {
+  margin: 10px;
+  width: 390px;
+  height: 50px;
+  font-size: 20px;
+  background-color: green;
+  color: #ddd;
+  border-radius: 10px;
+  border: none;
+}
+
+
+/* SPEC */
+.specs {
+  border: 1px solid black;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 130px;
+}
+
+.variants {
+  border: 1px solid rgb(218, 197, 197);
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.vhead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.vdhead {
+  font-size: 20px;
+  color: black;
+}
+
+.vdadd {
+  font-size: 18px;
+  color: green;
+}
+
+.vdetails {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.vdename {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.vdein {
+  width: 160px;
+  height: 38px;
+  margin-top: 5px;
+  border-radius: 8px;
+  padding-left: 10px;
+}
+
+.vdein::placeholder{
+
+  padding-left: 10px;
+}
+
+/* PREVIEW */
+.preview {
+  border: 1px solid rgb(231, 206, 206);
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.phead {
+  font-size: 15px;
+}
+
+.icont {
+ 
+  border-radius: 8px;
+  height: 130px;
+  width: 130px;
+  margin-bottom: 10px;
+}
+
+.pimg {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.preimg{
+
+  width:150px;
+  height: 120px;
+}
+
+.pde {
+  margin-top: 20px;
+}
+
+.pimghead {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.pimgkey {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.pimgvalue {
+  font-size: 13px;
+  font-weight: bold;
+  color: slategrey;
+}
+
+/* TABLE */
+.tableContainer {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 12px;
+}
+
+.table {
+  margin-top: 10px;
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 12px;
+  
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  border: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+.table th {
+  background: #f8f9fa;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.actions {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  
+}
+
+.editBtn,
+.deleteBtn {
+  border: none;
+  padding: 4px 8px;
+  font-size: 11px;
+  border-radius: 4px;
+  cursor: pointer;
+  
+}
+
+.editBtn {
+  background: #2563eb;
+  color: #fff;
+}
+
+.deleteBtn {
+  background: #dc2626;
+  color: #fff;
+}
+
+
+/* ===================== ADDED (NO REMOVAL) ===================== */
+
+/* PAGE SCROLL SUPPORT */
+.cont {
+  max-height: 100vh;
+  overflow-y: auto;
+  padding-bottom: 140px;
+}
+
+/* ACTION BUTTONS CONTAINER */
+.actionButtons {
+  display: flex;
+  gap: 12px;
+  margin: 20px 10px;
+}
+
+/* BACK + SAVE BUTTON BASE */
+.actionBtn {
+  flex: 1;
+  height: 50px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+/* BACK BUTTON */
+.backBtn {
+  background: #6b7280;
+  color: white;
+}
+
+.backBtn:hover {
+  background: #4b5563;
+}
+
+/* SAVE BUTTON */
+.saveBtn {
+  background: green;
+  color: white;
+}
+
+.saveBtn:hover {
+  background: #15803d;
+}
+
+.actionBtn:active {
+  transform: scale(0.98);
+}
+
+.editBtn {
+  background: #ffb020;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.editBtn:hover {
+  background: #e69a00;
+  transform: translateY(-1px);
+}
+
+.editBtn:active {
+  transform: scale(0.97);
+}
+
+.editBtn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
