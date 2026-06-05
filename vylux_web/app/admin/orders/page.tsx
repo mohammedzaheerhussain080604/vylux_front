@@ -45,7 +45,7 @@ export default function AdminOrders() {
     const fetchOrders = async () => {
       try {
         const res = await fetch(
-          "http://localhost:5000/api/vylux/orders/admin/all",
+          "https://vylux-front.onrender.com/api/vylux/orders/admin/all",
           {
             headers: {
               Authorization: token ? `Bearer ${token}` : "",
@@ -70,7 +70,7 @@ export default function AdminOrders() {
     if (itemsMap[id]) return;
 
     const res = await fetch(
-      `http://localhost:5000/api/vylux/orders/admin/${id}`,
+      `https://vylux-front.onrender.com/api/vylux/orders/admin/${id}`,
       {
         headers: {
           Authorization: token ? `Bearer ${token}` : "",
@@ -92,7 +92,7 @@ export default function AdminOrders() {
   const updateStatus = async (id: number, status: string) => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/vylux/orders/admin/${id}/status`,
+        `https://vylux-front.onrender.com/api/vylux/orders/admin/${id}/status`,
         {
           method: "PUT",
           headers: {

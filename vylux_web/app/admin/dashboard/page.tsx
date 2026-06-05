@@ -46,7 +46,7 @@ export default function DashboardPage() {
         const token = localStorage.getItem("token");
 
         const res = await fetch(
-          "http://localhost:5000/api/vylux/dashboard/stats",
+          "https://vylux-front.onrender.com/api/vylux/dashboard/stats",
           {
             headers: {
               Authorization: token ? `Bearer ${token}` : "",

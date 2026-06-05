@@ -30,7 +30,7 @@ export default function LoginPage() {
     try {
       setLoading(true);
 
-      const res = await fetch("http://localhost:5000/api/vylux/auth/login", {
+      const res = await fetch("https://vylux-front.onrender.com/api/vylux/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -36,7 +36,7 @@ export default function ProfilePage() {
 
   const fetchProfile = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/vylux/profile", {
+      const res = await fetch("https://vylux-front.onrender.com/api/vylux/profile", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -78,7 +78,7 @@ export default function ProfilePage() {
 
   const saveProfile = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/vylux/profile", {
+      const res = await fetch("https://vylux-front.onrender.com/api/vylux/profile", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

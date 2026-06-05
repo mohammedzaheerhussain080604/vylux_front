@@ -24,7 +24,7 @@ export default function ProductDetails() {
     const fetchProduct = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/vylux/products/${id}`
+          `https://vylux-front.onrender.com/api/vylux/products/${id}`
         );
 
         const data = await res.json();
@@ -155,7 +155,7 @@ export default function ProductDetails() {
 
     try {
       const res = await fetch(
-        "http://localhost:5000/api/vylux/cart/add",
+        "https://vylux-front.onrender.com/api/vylux/cart/add",
         {
           method: "POST",
           headers: {

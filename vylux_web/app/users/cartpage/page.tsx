@@ -30,7 +30,7 @@ export default function CartPage() {
       setLoading(true);
 
       const res = await fetch(
-        "http://localhost:5000/api/vylux/cart",
+        "https://vylux-front.onrender.com/api/vylux/cart",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -54,7 +54,7 @@ export default function CartPage() {
   /* ================= UPDATE QTY ================= */
   const updateQty = async (cart_id: number, quantity: number) => {
     try {
-      await fetch("http://localhost:5000/api/vylux/cart/update", {
+      await fetch("https://vylux-front.onrender.com/api/vylux/cart/update", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -105,7 +105,7 @@ export default function CartPage() {
   const removeItem = async (id: number) => {
     setCartItems((prev) => prev.filter((i) => i.cart_id !== id));
 
-    await fetch(`http://localhost:5000/api/vylux/cart/${id}`, {
+    await fetch(`https://vylux-front.onrender.com/api/vylux/cart/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -117,7 +117,7 @@ export default function CartPage() {
   const clearCart = async () => {
     setCartItems([]);
 
-    await fetch("http://localhost:5000/api/vylux/cart/clear", {
+    await fetch("https://vylux-front.onrender.com/api/vylux/cart/clear", {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,

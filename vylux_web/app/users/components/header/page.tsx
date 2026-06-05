@@ -24,7 +24,7 @@ export default function Header() {
   const fetchCart = async () => {
     try {
       const res = await fetch(
-        "http://localhost:5000/api/vylux/cart",
+        "https://vylux-front.onrender.com/api/vylux/cart",
         {
           headers: {
             Authorization: `Bearer ${token}`,

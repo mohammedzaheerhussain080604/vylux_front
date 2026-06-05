@@ -40,7 +40,7 @@ interface CallbackRequest {
 
 export default function ContactAdminPage() {
   const API_URL =
-    process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+    process.env.NEXT_PUBLIC_API_URL || "https://vylux-front.onrender.com";
 
   const [settings, setSettings] = useState<ContactSettings>({
     banner_image: "",

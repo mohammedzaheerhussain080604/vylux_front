@@ -42,7 +42,7 @@ export default function RegisterPage() {
     try {
       setLoading(true);
 
-      const res = await fetch("http://localhost:5000/api/vylux/auth/register", {
+      const res = await fetch("https://vylux-front.onrender.com/api/vylux/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

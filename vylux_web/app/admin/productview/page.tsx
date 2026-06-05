@@ -34,7 +34,7 @@ type Product = {
   variants?: Variant[];
 };
 
-const API = "http://localhost:5000/api/vylux";
+const API = "https://vylux-front.onrender.com/api/vylux";
 
 export default function Productview() {
   const [categories, setCategories] = useState<Category[]>([]);

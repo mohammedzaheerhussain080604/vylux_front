@@ -17,7 +17,7 @@ type Variant = {
   stock: string;
 };
 
-const API = "http://localhost:5000/api/vylux";
+const API = "https://vylux-front.onrender.com/api/vylux";
 
 export default function EditProduct() {
   // =====================

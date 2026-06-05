@@ -57,7 +57,7 @@ export default function MyOrders() {
     const fetchOrders = async () => {
       try {
         const res = await fetch(
-          "http://localhost:5000/api/vylux/orders/my-orders",
+          "https://vylux-front.onrender.com/api/vylux/orders/my-orders",
           {
             headers: {
               Authorization: token ? `Bearer ${token}` : "",
@@ -93,7 +93,7 @@ export default function MyOrders() {
  const loadItems = async (orderId: number) => {
   try {
     const res = await fetch(
-      `http://localhost:5000/api/vylux/orders/${orderId}`,
+      `https://vylux-front.onrender.com/api/vylux/orders/${orderId}`,
       {
         headers: {
           Authorization: token ? `Bearer ${token}` : "",
@@ -144,7 +144,7 @@ const downloadBill = async (order: Order) => {
   if (!items) {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/vylux/orders/${order.id}`,
+        `https://vylux-front.onrender.com/api/vylux/orders/${order.id}`,
         {
           headers: {
             Authorization: token ? `Bearer ${token}` : "",

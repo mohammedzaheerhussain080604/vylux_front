@@ -26,7 +26,7 @@ type Category = {
    API CONFIGURATION
 ========================================================== */
 
-const API = "http://localhost:5000/api/vylux/home";
+const API = "https://vylux-front.onrender.com/api/vylux/home";
 
 /* ==========================================================
    COMPONENT

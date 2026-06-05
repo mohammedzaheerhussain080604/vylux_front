@@ -59,7 +59,7 @@ export default function AddProduct() {
     const fetchCategories = async () => {
       try {
         const res = await fetch(
-          "http://localhost:5000/api/vylux/home/categories"
+          "https://vylux-front.onrender.com/api/vylux/home/categories"
         );
         const data = await res.json();
         setCategories(data);
@@ -131,7 +131,7 @@ export default function AddProduct() {
       );
 
       const res = await fetch(
-        "http://localhost:5000/api/vylux/products",
+        "https://vylux-front.onrender.com/api/vylux/products",
         {
           method: "POST",
           body: formData,

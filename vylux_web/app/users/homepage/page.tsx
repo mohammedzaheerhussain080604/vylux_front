@@ -49,7 +49,7 @@ type Product = {
 
 /* ================= PAGE ================= */
 
-const API = "http://localhost:5000/api/vylux/home";
+const API = "https://vylux-front.onrender.com/api/vylux/home";
 
 export default function HomePage() {
   const router = useRouter();
@@ -64,7 +64,7 @@ export default function HomePage() {
   const fetchProducts = async () => {
     try {
       const res = await fetch(
-        "http://localhost:5000/api/vylux/products"
+        "https://vylux-front.onrender.com/api/vylux/products"
       );
 
       const data = await res.json();

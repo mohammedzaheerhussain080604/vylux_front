@@ -60,7 +60,7 @@ export default function Checkout() {
      const fetchGST = async () => {
     try {
       const res = await fetch(
-        "http://localhost:5000/api/vylux/contact/settings"
+        "https://vylux-front.onrender.com/api/vylux/contact/settings"
       );
 
       const data = await res.json();
@@ -78,7 +78,7 @@ export default function Checkout() {
 
     const fetchProfile = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/vylux/profile", {
+        const res = await fetch("https://vylux-front.onrender.com/api/vylux/profile", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -137,7 +137,7 @@ const gst = useMemo(() => {
   /* ================= SAVE PROFILE ================= */
   const updateProfile = async () => {
     try {
-      await fetch("http://localhost:5000/api/vylux/profile", {
+      await fetch("https://vylux-front.onrender.com/api/vylux/profile", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -197,7 +197,7 @@ const gst = useMemo(() => {
         grand_total: total,
       };
 
-      const res = await fetch("http://localhost:5000/api/vylux/orders", {
+      const res = await fetch("https://vylux-front.onrender.com/api/vylux/orders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

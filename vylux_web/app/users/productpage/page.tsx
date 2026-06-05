@@ -45,7 +45,7 @@ export default function ProductListing() {
     const fetchCategories = async () => {
       try {
         const res = await fetch(
-          "http://localhost:5000/api/vylux/home/categories"
+          "https://vylux-front.onrender.com/api/vylux/home/categories"
         );
         const data = await res.json();
         setCategories(Array.isArray(data) ? data : []);
@@ -66,7 +66,7 @@ export default function ProductListing() {
         setLoading(true);
 
         const res = await fetch(
-          `http://localhost:5000/api/vylux/products?search=${search}&category=${
+          `https://vylux-front.onrender.com/api/vylux/products?search=${search}&category=${
             selectedCategory === "All" ? "" : selectedCategory
           }`
         );
