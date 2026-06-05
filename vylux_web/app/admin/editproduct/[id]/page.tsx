@@ -10,7 +10,7 @@ type Category = {
 };
 
 type Variant = {
-  id?: number | string;
+  id: number ;
   watt: string;
   price: string;
   moq: string;
@@ -115,15 +115,15 @@ export default function EditProduct() {
       setMainImage(product.main_image || "");
       setGallery(data.images || []);
 
-      setVariants(
-        (data.variants || []).map((v: any) => ({
-          id: v.id,
-          watt: v.watt,
-          price: v.price,
-          moq: v.moq,
-          stock: v.stock,
-        }))
-      );
+     setVariants(
+  (data.variants || []).map((v: any) => ({
+    id: Number(v.id),
+    watt: v.watt,
+    price: v.price,
+    moq: v.moq,
+    stock: v.stock,
+  }))
+);
     };
 
     fetchProduct();
