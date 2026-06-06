@@ -14,6 +14,7 @@
 .heroScroll {
   display: flex;
   gap: 12px;
+  height: 150px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   padding: 0 12px;
