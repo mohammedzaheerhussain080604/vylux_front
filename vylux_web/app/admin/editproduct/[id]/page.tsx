@@ -173,7 +173,7 @@ export default function EditProduct() {
     if (!variantWatt || !price) return alert("Watt & Price required");
 
     const newVariant: Variant = {
-      
+       id: undefined,
       watt: variantWatt,
       price,
       moq,
