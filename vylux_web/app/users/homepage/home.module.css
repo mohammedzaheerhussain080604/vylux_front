@@ -81,10 +81,11 @@
 }
 
 .categoryCard {
-  min-width: 110px;
+  min-width: 85px;   /* smaller width */
+  padding: 8px;      /* less padding */
+  border-radius: 12px;
   background: #fff;
-  border-radius: 14px;
-  padding: 10px;
+
   border: 1px solid #ececec;
   text-align: center;
   text-decoration: none;

@@ -155,7 +155,7 @@ export default function HomePage() {
       <section className={styles.section}>
         <div className={styles.titleRow}>
           <h3>Shop by Category</h3>
-          <Link href="/categories">View All</Link>
+          <Link href="/users/productpage">View All</Link>
         </div>
 
         <div className={styles.categoryScroll}>
@@ -184,7 +184,8 @@ export default function HomePage() {
       <section className={styles.section}>
         <div className={styles.titleRow}>
           <h3>New Products</h3>
-          <span>View All</span>
+          <Link href="/users/productpage">View All</Link>
+
         </div>
 
         <div className={styles.scrollArea}>
