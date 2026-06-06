@@ -14,7 +14,6 @@
 .heroScroll {
   display: flex;
   gap: 12px;
-  height: 150px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   padding: 0 12px;
@@ -28,7 +27,7 @@
 .heroCard {
   position: relative;
   min-width: calc(100vw - 24px);
-  height: 220px;
+  height: 200px;
   border-radius: 18px;
   overflow: hidden;
   flex-shrink: 0;
