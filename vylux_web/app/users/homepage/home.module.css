@@ -81,7 +81,7 @@
 }
 
 .categoryCard {
-  min-width: 85px;        /* smaller width */
+  min-width: 75px;        /* smaller width */
   padding: 6px;           /* reduced padding */
   border-radius: 12px;
   background: #fff;
@@ -95,7 +95,7 @@
   flex-direction: column;
   align-items: center;
 
-  height: 105px;          /* controls overall box height */
+  height: 65px;          /* controls overall box height */
   justify-content: center;
 }
 
