@@ -10,7 +10,7 @@ type Category = {
 };
 
 type Variant = {
-  id: number ;
+  id?: number ;
   watt: string;
   price: string;
   moq: string;
@@ -188,21 +188,25 @@ export default function EditProduct() {
     setStock("");
   };
 
-  const editVariant = (id: number) => {
-       const v = variants.find((x) => String(x.id) === String(id));
-    if (!v) return;
+  const editVariant = (id?: number) => {
+  if (id === undefined) return;
 
-    setVariantWatt(v.watt);
-    setPrice(v.price);
-    setMoq(v.moq);
-    setStock(v.stock);
+  const v = variants.find((x) => x.id === id);
+  if (!v) return;
 
-    setVariants((prev) => prev.filter((x) => x.id !== id));
-  };
+  setVariantWatt(v.watt);
+  setPrice(v.price);
+  setMoq(v.moq);
+  setStock(v.stock);
 
-  const deleteVariant = (id: number) => {
-    setVariants((prev) => prev.filter((v) => v.id !== id));
-  };
+  setVariants((prev) => prev.filter((x) => x.id !== id));
+};
+
+const deleteVariant = (id?: number) => {
+  if (id === undefined) return;
+
+  setVariants((prev) => prev.filter((v) => v.id !== id));
+};
 
   // =====================
   // SAVE (UPDATE ONLY)
