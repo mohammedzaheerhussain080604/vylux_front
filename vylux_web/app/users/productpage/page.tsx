@@ -285,9 +285,7 @@ const fetchProducts = async () => {
   View Product
 </button>
 
-                <button className={styles.quoteBtn}>
-                  Request Quote
-                </button>
+               
               </div>
             );
           })}
