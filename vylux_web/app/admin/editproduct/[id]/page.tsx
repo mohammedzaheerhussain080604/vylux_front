@@ -8,47 +8,41 @@ const API = "https://vylux-front.onrender.com/api/vylux";
 
 export default function EditProduct() {
   const params = useParams();
-  const productId = params?.id ? String(params.id) : null;
+  const productId = params?.id;
   const isEdit = Boolean(productId);
 
   const [page, setPage] = useState("info");
 
-  // ================= BASIC =================
   const [productName, setProductName] = useState("");
   const [modelNumber, setModelNumber] = useState("");
 
   const [category, setCategory] = useState(null);
   const [categories, setCategories] = useState([]);
 
-  // ================= IMAGES =================
   const [mainImage, setMainImage] = useState("");
   const [gallery, setGallery] = useState([]);
   const [mainImageFile, setMainImageFile] = useState(null);
   const [galleryFiles, setGalleryFiles] = useState([]);
   const [preview, setPreview] = useState(null);
 
-  // ================= WARRANTY =================
   const [warranty, setWarranty] = useState("");
 
-  // ================= SPECS =================
   const [power, setPower] = useState("");
   const [colorTemperature, setColorTemperature] = useState("");
   const [ratedVoltage, setRatedVoltage] = useState("");
   const [operatingVoltage, setOperatingVoltage] = useState("");
   const [averageLife, setAverageLife] = useState("");
 
-  // ================= VARIANTS =================
-  const [variants, setVariants] = useState([]);
-  const [variantWatt, setVariantWatt] = useState("");
-  const [price, setPrice] = useState("");
-  const [moq, setMoq] = useState("");
-  const [stock, setStock] = useState("");
+ const [variants, setVariants] = useState([]);
+const [variantWatt, setVariantWatt] = useState("");
+const [price, setPrice] = useState("");
+const [moq, setMoq] = useState("");
+const [stock, setStock] = useState("");
 
-  const [editingVariantId, setEditingVariantId] = useState(null);
+const [editingVariantId, setEditingVariantId] = useState(null);
 
   const [isEditing, setIsEditing] = useState(false);
 
-  // ================= FETCH CATEGORIES =================
   useEffect(() => {
     const fetchCategories = async () => {
       const res = await fetch(`${API}/home/categories`);
@@ -59,7 +53,6 @@ export default function EditProduct() {
     fetchCategories();
   }, []);
 
-  // ================= FETCH PRODUCT =================
   useEffect(() => {
     if (!productId) return;
 
@@ -71,7 +64,7 @@ export default function EditProduct() {
 
       setProductName(product.name || "");
       setModelNumber(product.model || "");
-      setCategory(product.category_id ?? null);
+      setCategory(product.category_id ?? product.category ?? null);
 
       setPower(product.power_consumption || "");
       setColorTemperature(product.color_temperature || "");
@@ -97,7 +90,6 @@ export default function EditProduct() {
     fetchProduct();
   }, [productId]);
 
-  // ================= IMAGE HANDLERS =================
   const handleMainImage = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -130,12 +122,10 @@ export default function EditProduct() {
     setGalleryFiles((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // ================= VARIANTS =================
   const addVariant = () => {
     if (!variantWatt || !price) return alert("Watt & Price required");
 
     const newVariant = {
-      id: Date.now(),
       watt: variantWatt,
       price,
       moq,
@@ -151,6 +141,8 @@ export default function EditProduct() {
   };
 
   const editVariant = (id) => {
+    if (id === undefined) return;
+
     const v = variants.find((x) => x.id === id);
     if (!v) return;
 
@@ -159,38 +151,14 @@ export default function EditProduct() {
     setMoq(v.moq);
     setStock(v.stock);
 
-    setEditingVariantId(id);
-  };
-
-  const updateVariant = () => {
-    if (!editingVariantId) return;
-
-    setVariants((prev) =>
-      prev.map((v) =>
-        v.id === editingVariantId
-          ? {
-              ...v,
-              watt: variantWatt,
-              price,
-              moq,
-              stock,
-            }
-          : v
-      )
-    );
-
-    setEditingVariantId(null);
-    setVariantWatt("");
-    setPrice("");
-    setMoq("");
-    setStock("");
+    setVariants((prev) => prev.filter((x) => x.id !== id));
   };
 
   const deleteVariant = (id) => {
+    if (id === undefined) return;
     setVariants((prev) => prev.filter((v) => v.id !== id));
   };
 
-  // ================= SAVE =================
   const handleSave = async () => {
     if (!productId) return alert("Invalid product");
 
@@ -198,7 +166,7 @@ export default function EditProduct() {
 
     formData.append("name", productName);
     formData.append("model", modelNumber);
-    formData.append("category", String(category || ""));
+    formData.append("category", String(category));
 
     formData.append("powerConsumption", power);
     formData.append("colorTemperature", colorTemperature);
@@ -209,9 +177,7 @@ export default function EditProduct() {
 
     if (mainImageFile) formData.append("mainImage", mainImageFile);
 
-    galleryFiles.forEach((f) =>
-      formData.append("galleryImages", f)
-    );
+    galleryFiles.forEach((f) => formData.append("galleryImages", f));
 
     formData.append("variants", JSON.stringify(variants));
 
@@ -229,6 +195,7 @@ export default function EditProduct() {
       alert(data.message || "Update failed");
     }
   };
+
 
   return (
     <div className={styles.cont}>
@@ -328,6 +295,7 @@ export default function EditProduct() {
             />
           )}
 
+          {/* disable upload if locked */}
           <input
             type="file"
             hidden
@@ -420,6 +388,7 @@ export default function EditProduct() {
   </>
 )}
       {/* ================= PAGE 2 FULL ================= */}
+    
 {page === "specs" && (
   <>
     <div className={styles.basics}>
