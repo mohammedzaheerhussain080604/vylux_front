@@ -4,81 +4,51 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import styles from "./editproduct.module.css";
 
-type Category = {
-  id: number;
-  name: string;
-};
-
-type Variant = {
-  id?: number ;
-  watt: string;
-  price: string;
-  moq: string;
-  stock: string;
-};
-
 const API = "https://vylux-front.onrender.com/api/vylux";
 
 export default function EditProduct() {
-  // =====================
-  // ROUTE PARAM
-  // =====================
   const params = useParams();
-  const productId = params?.id as string | undefined;
+  const productId = params?.id ? String(params.id) : null;
   const isEdit = Boolean(productId);
 
-  // =====================
-  // PAGE CONTROL
-  // =====================
-  const [page, setPage] = useState<"info" | "specs">("info");
+  const [page, setPage] = useState("info");
 
-  // =====================
-  // BASIC INFO
-  // =====================
+  // ================= BASIC =================
   const [productName, setProductName] = useState("");
   const [modelNumber, setModelNumber] = useState("");
 
-  // =====================
-  // CATEGORY
-  // =====================
-  const [category, setCategory] = useState<number | null>(null);
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [category, setCategory] = useState(null);
+  const [categories, setCategories] = useState([]);
 
-  // =====================
-  // IMAGES
-  // =====================
+  // ================= IMAGES =================
   const [mainImage, setMainImage] = useState("");
-  const [gallery, setGallery] = useState<string[]>([]);
-  const [mainImageFile, setMainImageFile] = useState<File | null>(null);
-  const [galleryFiles, setGalleryFiles] = useState<File[]>([]);
-  const [preview, setPreview] = useState<string | null>(null);
+  const [gallery, setGallery] = useState([]);
+  const [mainImageFile, setMainImageFile] = useState(null);
+  const [galleryFiles, setGalleryFiles] = useState([]);
+  const [preview, setPreview] = useState(null);
 
-  // =====================
-  // WARRANTY
-  // =====================
+  // ================= WARRANTY =================
   const [warranty, setWarranty] = useState("");
 
-  // =====================
-  // TECH SPECS
-  // =====================
+  // ================= SPECS =================
   const [power, setPower] = useState("");
   const [colorTemperature, setColorTemperature] = useState("");
   const [ratedVoltage, setRatedVoltage] = useState("");
   const [operatingVoltage, setOperatingVoltage] = useState("");
   const [averageLife, setAverageLife] = useState("");
 
-  // =====================
-  // VARIANTS
-  // =====================
-  const [variants, setVariants] = useState<Variant[]>([]);
+  // ================= VARIANTS =================
+  const [variants, setVariants] = useState([]);
   const [variantWatt, setVariantWatt] = useState("");
   const [price, setPrice] = useState("");
   const [moq, setMoq] = useState("");
   const [stock, setStock] = useState("");
 
-  // =====================
-  // FETCH CATEGORIES
-  // =====================
+  const [editingVariantId, setEditingVariantId] = useState(null);
+
+  const [isEditing, setIsEditing] = useState(false);
+
+  // ================= FETCH CATEGORIES =================
   useEffect(() => {
     const fetchCategories = async () => {
       const res = await fetch(`${API}/home/categories`);
@@ -89,9 +59,7 @@ export default function EditProduct() {
     fetchCategories();
   }, []);
 
-  // =====================
-  // FETCH PRODUCT (EDIT)
-  // =====================
+  // ================= FETCH PRODUCT =================
   useEffect(() => {
     if (!productId) return;
 
@@ -103,7 +71,7 @@ export default function EditProduct() {
 
       setProductName(product.name || "");
       setModelNumber(product.model || "");
-      setCategory(product.category_id ?? product.category ?? null);
+      setCategory(product.category_id ?? null);
 
       setPower(product.power_consumption || "");
       setColorTemperature(product.color_temperature || "");
@@ -115,26 +83,22 @@ export default function EditProduct() {
       setMainImage(product.main_image || "");
       setGallery(data.images || []);
 
-     setVariants(
-  (data.variants || []).map((v: any) => ({
-    id: Number(v.id),
-    watt: v.watt,
-    price: v.price,
-    moq: v.moq,
-    stock: v.stock,
-  }))
-);
+      setVariants(
+        (data.variants || []).map((v) => ({
+          id: Number(v.id),
+          watt: v.watt,
+          price: v.price,
+          moq: v.moq,
+          stock: v.stock,
+        }))
+      );
     };
 
     fetchProduct();
   }, [productId]);
 
-
-  const [isEditing, setIsEditing] = useState(false);
-  // =====================
-  // IMAGE HANDLERS
-  // =====================
-  const handleMainImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // ================= IMAGE HANDLERS =================
+  const handleMainImage = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -142,7 +106,7 @@ export default function EditProduct() {
     setMainImage(URL.createObjectURL(file));
   };
 
-  const handleGallery = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleGallery = (e) => {
     const files = e.target.files;
     if (!files) return;
 
@@ -161,19 +125,17 @@ export default function EditProduct() {
     ]);
   };
 
-  const deleteImage = (index: number) => {
+  const deleteImage = (index) => {
     setGallery((prev) => prev.filter((_, i) => i !== index));
     setGalleryFiles((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // =====================
-  // VARIANTS
-  // =====================
+  // ================= VARIANTS =================
   const addVariant = () => {
     if (!variantWatt || !price) return alert("Watt & Price required");
 
-    const newVariant: Variant = {
-       id: undefined,
+    const newVariant = {
+      id: Date.now(),
       watt: variantWatt,
       price,
       moq,
@@ -188,29 +150,47 @@ export default function EditProduct() {
     setStock("");
   };
 
-  const editVariant = (id?: number) => {
-  if (id === undefined) return;
+  const editVariant = (id) => {
+    const v = variants.find((x) => x.id === id);
+    if (!v) return;
 
-  const v = variants.find((x) => x.id === id);
-  if (!v) return;
+    setVariantWatt(v.watt);
+    setPrice(v.price);
+    setMoq(v.moq);
+    setStock(v.stock);
 
-  setVariantWatt(v.watt);
-  setPrice(v.price);
-  setMoq(v.moq);
-  setStock(v.stock);
+    setEditingVariantId(id);
+  };
 
-  setVariants((prev) => prev.filter((x) => x.id !== id));
-};
+  const updateVariant = () => {
+    if (!editingVariantId) return;
 
-const deleteVariant = (id?: number) => {
-  if (id === undefined) return;
+    setVariants((prev) =>
+      prev.map((v) =>
+        v.id === editingVariantId
+          ? {
+              ...v,
+              watt: variantWatt,
+              price,
+              moq,
+              stock,
+            }
+          : v
+      )
+    );
 
-  setVariants((prev) => prev.filter((v) => v.id !== id));
-};
+    setEditingVariantId(null);
+    setVariantWatt("");
+    setPrice("");
+    setMoq("");
+    setStock("");
+  };
 
-  // =====================
-  // SAVE (UPDATE ONLY)
-  // =====================
+  const deleteVariant = (id) => {
+    setVariants((prev) => prev.filter((v) => v.id !== id));
+  };
+
+  // ================= SAVE =================
   const handleSave = async () => {
     if (!productId) return alert("Invalid product");
 
@@ -218,7 +198,7 @@ const deleteVariant = (id?: number) => {
 
     formData.append("name", productName);
     formData.append("model", modelNumber);
-    formData.append("category", String(category));
+    formData.append("category", String(category || ""));
 
     formData.append("powerConsumption", power);
     formData.append("colorTemperature", colorTemperature);
@@ -249,7 +229,6 @@ const deleteVariant = (id?: number) => {
       alert(data.message || "Update failed");
     }
   };
-
 
   return (
     <div className={styles.cont}>
@@ -349,7 +328,6 @@ const deleteVariant = (id?: number) => {
             />
           )}
 
-          {/* disable upload if locked */}
           <input
             type="file"
             hidden
@@ -442,7 +420,6 @@ const deleteVariant = (id?: number) => {
   </>
 )}
       {/* ================= PAGE 2 FULL ================= */}
-    
 {page === "specs" && (
   <>
     <div className={styles.basics}>
