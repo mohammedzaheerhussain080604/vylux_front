@@ -81,8 +81,7 @@
 }
 
 .categoryCard {
-  min-width: 600px;
-  height: 60px;
+  min-width: 110px;
   background: #fff;
   border-radius: 14px;
   padding: 10px;
