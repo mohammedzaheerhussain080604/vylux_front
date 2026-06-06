@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense } from "react";
 import styles from "./sucess.module.css";
 import { FaWhatsapp, FaCheck } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
@@ -100,4 +100,15 @@ const OrderSuccess: React.FC = () => {
   );
 };
 
-export default OrderSuccess;
+/* ================= IMPORTANT FIX =================
+   Suspense wrapper is REQUIRED for useSearchParams
+================================================== */
+const Page = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <OrderSuccess />
+    </Suspense>
+  );
+};
+
+export default Page;
