@@ -96,6 +96,25 @@ export default function ProductListing() {
   return () => clearTimeout(delay);
 }, [search, selectedCategory]);
 
+const fetchProducts = async () => {
+  try {
+    setLoading(true);
+
+    const res = await fetch(
+      `https://vylux-front.onrender.com/api/vylux/products?search=${search}&category=${
+        selectedCategory === "All" ? "" : selectedCategory
+      }`
+    );
+
+    const data = await res.json();
+    setProducts(Array.isArray(data) ? data : []);
+  } catch (err) {
+    console.error("Failed to fetch products:", err);
+    setProducts([]);
+  } finally {
+    setLoading(false);
+  }
+};
   /* =========================
      SORT PRODUCTS
   ========================= */
