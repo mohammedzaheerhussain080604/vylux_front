@@ -27,7 +27,7 @@
 .heroCard {
   position: relative;
   min-width: calc(100vw - 24px);
-  height: 200px;
+  height: 160px;
   border-radius: 18px;
   overflow: hidden;
   flex-shrink: 0;
