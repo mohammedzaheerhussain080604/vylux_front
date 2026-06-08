@@ -45,33 +45,50 @@ export default function Productview() {
 
   const router = useRouter();
 
+  const getToken = () => {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem("token");
+};
+
+const getRole = () => {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem("role");
+};
+
   // ================= ADMIN PROTECTION (IMPORTANT) =================
  useEffect(() => {
-  const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role");
-
-  console.log("TOKEN:", token);
-  console.log("ROLE:", role);
+  const token = getToken();
+  const role = getRole();
 
   if (!token) {
-    console.log("No token found");
     window.location.replace("/admin/login");
     return;
   }
 
   if (role !== "admin") {
-    console.log("Role is not admin:", role);
-    window.location.replace("/unauthorized");
+    window.location.replace("/admin/login");
     return;
   }
-
-  console.log("Admin authenticated");
 }, []);
 
   useEffect(() => {
-    fetchCategories();
-    fetchProducts();
-  }, []);
+  const token = getToken();
+  const role = getRole();
+
+  if (!token) {
+    window.location.replace("/admin/login");
+    return;
+  }
+
+  if (role !== "admin") {
+    window.location.replace("/admin/login");
+    return;
+  }
+
+  // ONLY fetch after validation
+  fetchCategories();
+  fetchProducts();
+}, []);
 
   const fetchCategories = async () => {
     try {
@@ -100,8 +117,11 @@ export default function Productview() {
 
     try {
       const res = await fetch(`${API}/products/${id}`, {
-        method: "DELETE",
-      });
+  method: "DELETE",
+  headers: {
+    Authorization: `Bearer ${getToken()}`,
+  },
+});
 
       if (!res.ok) throw new Error("Delete failed");
 

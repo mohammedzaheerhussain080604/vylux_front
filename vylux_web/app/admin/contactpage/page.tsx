@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./contactpage.module.css";
+import { useRouter } from "next/navigation";
 
 import {
   Phone,
@@ -59,6 +60,25 @@ export default function ContactAdminPage() {
     gst_number: "",
     closing_time: "06:00 PM",
   });
+  
+  const router = useRouter();
+
+const [authorized, setAuthorized] = useState(false);
+const [checkingAuth, setCheckingAuth] = useState(true);
+
+useEffect(() => {
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
+
+  if (!token || role !== "admin") {
+    router.replace("/admin/login");
+    return;
+  }
+
+  setAuthorized(true);
+  setCheckingAuth(false);
+}, [router]);
+
 
   const [bannerFile, setBannerFile] = useState<File | null>(null);
 
@@ -68,10 +88,12 @@ export default function ContactAdminPage() {
 
   
 
-  useEffect(() => {
-    fetchSettings();
-    fetchRequests();
-  }, []);
+useEffect(() => {
+  if (!authorized) return;
+
+  fetchSettings();
+  fetchRequests();
+}, [authorized]);
 
   const validateBanner = () => {
   if (!bannerFile && !settings.banner_image) {
@@ -81,13 +103,7 @@ export default function ContactAdminPage() {
   return true;
 };
 
-useEffect(() => {
-  const token = getToken();
 
-  if (!token) {
-    window.location.href = "/admin/login";
-  }
-}, []);
 
 const validateContactDetails = () => {
   if (!settings.phone_number.trim()) {

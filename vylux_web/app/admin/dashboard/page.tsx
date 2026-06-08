@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import styles from "./dashboard.module.css";
+import { useRouter } from "next/navigation";
 
 interface Stats {
   users: number;
@@ -48,53 +49,63 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // =====================
-  // ADMIN GUARD
-  // =====================
-  useEffect(() => {
+  const router = useRouter();
+ const [authorized, setAuthorized] = useState(false);
+
+useEffect(() => {
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
+
+  if (!token) {
+    router.replace("/admin/login");
+    return;
+  }
+
+  if (role !== "admin") {
+    router.replace("/unauthorized");
+    return;
+  }
+
+  setAuthorized(true);
+}, [router]);
+
+
+ useEffect(() => {
+  if (!authorized) return;
+
+  const load = async () => {
     const token = getToken();
 
-    if (!token) {
-      window.location.href = "/admin/login";
-    }
-  }, []);
-
-  useEffect(() => {
-    const load = async () => {
-      const token = getToken();
-      if (!token) return;
-
-      try {
-        const res = await fetch(
-          "https://vylux-front.onrender.com/api/vylux/dashboard/stats",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        const json = await res.json();
-
-        if (!json.success) {
-          throw new Error("Dashboard failed");
+    try {
+      const res = await fetch(
+        "https://vylux-front.onrender.com/api/vylux/dashboard/stats",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
+      );
 
-        setData(json);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("Something went wrong");
-        }
-      } finally {
-        setLoading(false);
+      const json = await res.json();
+
+      if (!json.success) {
+        throw new Error("Dashboard failed");
       }
-    };
 
-    load();
-  }, []);
+      setData(json);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Something went wrong"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  load();
+}, [authorized]);
+
+  if (!authorized) return null;
   if (loading) return <div className={styles.loading}>Loading...</div>;
   if (error) return <div className={styles.error}>{error}</div>;
   if (!data) return <div className={styles.error}>No Data</div>;

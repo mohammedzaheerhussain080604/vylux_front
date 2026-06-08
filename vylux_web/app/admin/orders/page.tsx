@@ -51,6 +51,7 @@ const getRole = () => {
   return localStorage.getItem("role");
 };
 
+/* ================= ADMIN GUARD ================= */
 useEffect(() => {
   const token = getToken();
   const role = getRole();
@@ -61,7 +62,7 @@ useEffect(() => {
   }
 
   if (role !== "admin") {
-    window.location.href = "/unauthorized";
+    window.location.href = "/admin/login";
     return;
   }
 }, []);

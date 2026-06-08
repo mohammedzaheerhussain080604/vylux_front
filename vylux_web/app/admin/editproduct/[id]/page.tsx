@@ -58,79 +58,79 @@ export default function EditProduct() {
   // 🔐 ADMIN CHECK (NO EXTRA FUNCTION)
   // =========================
   useEffect(() => {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
 
-    if (!token) {
-      window.location.href = "/admin/login";
-    }
-  }, []);
+  if (!token || role !== "admin") {
+    window.location.href = "/admin/login";
+  }
+}, []);
 
   // =========================
   // FETCH CATEGORIES (SECURED)
   // =========================
   useEffect(() => {
-    const fetchCategories = async () => {
-      const token = localStorage.getItem("token");
+  const fetchCategories = async () => {
+    const token = localStorage.getItem("token");
 
-      const res = await fetch(`${API}/home/categories`, {
-        headers: {
-          Authorization: token ? `Bearer ${token}` : "",
-        },
-      });
+    const res = await fetch(`${API}/home/categories`, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+    });
 
-      const data = await res.json();
-      setCategories(Array.isArray(data) ? data : []);
-    };
+    const data = await res.json();
+    setCategories(Array.isArray(data) ? data : []);
+  };
 
-    fetchCategories();
-  }, []);
+  fetchCategories();
+}, []);
 
   // =========================
   // FETCH PRODUCT (SECURED)
   // =========================
   useEffect(() => {
-    if (!productId) return;
+  if (!productId) return;
 
-    const fetchProduct = async () => {
-      const token = localStorage.getItem("token");
+  const fetchProduct = async () => {
+    const token = localStorage.getItem("token");
 
-      const res = await fetch(`${API}/products/${productId}`, {
-        headers: {
-          Authorization: token ? `Bearer ${token}` : "",
-        },
-      });
+    const res = await fetch(`${API}/products/${productId}`, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+    });
 
-      const data = await res.json();
+    const data = await res.json();
+    const product = data.product;
 
-      const product = data.product;
+    setProductName(product.name || "");
+    setModelNumber(product.model || "");
+    setCategory(product.category_id ?? product.category ?? null);
 
-      setProductName(product.name || "");
-      setModelNumber(product.model || "");
-      setCategory(product.category_id ?? product.category ?? null);
+    setPower(product.power_consumption || "");
+    setColorTemperature(product.color_temperature || "");
+    setRatedVoltage(product.rated_voltage || "");
+    setOperatingVoltage(product.operating_voltage || "");
+    setAverageLife(product.average_life || "");
+    setWarranty(product.warranty || "");
 
-      setPower(product.power_consumption || "");
-      setColorTemperature(product.color_temperature || "");
-      setRatedVoltage(product.rated_voltage || "");
-      setOperatingVoltage(product.operating_voltage || "");
-      setAverageLife(product.average_life || "");
-      setWarranty(product.warranty || "");
+    setMainImage(product.main_image || "");
+    setGallery(data.images || []);
 
-      setMainImage(product.main_image || "");
-      setGallery(data.images || []);
+    setVariants(
+      (data.variants || []).map((v: any) => ({
+        id: Number(v.id),
+        watt: v.watt,
+        price: v.price,
+        moq: v.moq,
+        stock: v.stock,
+      }))
+    );
+  };
 
-      setVariants(
-        (data.variants || []).map((v: any) => ({
-          id: Number(v.id),
-          watt: v.watt,
-          price: v.price,
-          moq: v.moq,
-          stock: v.stock,
-        }))
-      );
-    };
-
-    fetchProduct();
-  }, [productId]);
+  fetchProduct();
+}, [productId]);
 
   // =========================
   // IMAGE HANDLERS

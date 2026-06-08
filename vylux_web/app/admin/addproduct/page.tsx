@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import styles from "./addproduct.module.css";
+import { useRouter } from "next/navigation";
+
 
 export default function AddProduct() {
   type Category = {
@@ -16,6 +18,9 @@ export default function AddProduct() {
     moq: string;
     stock: string;
   };
+
+  const router = useRouter();
+const [authorized, setAuthorized] = useState(false);
 
   // =====================
   // STATE
@@ -51,6 +56,23 @@ export default function AddProduct() {
   const [price, setPrice] = useState("");
   const [moq, setMoq] = useState("");
   const [stock, setStock] = useState("");
+
+  useEffect(() => {
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
+
+  if (!token) {
+    router.replace("/admin/login");
+    return;
+  }
+
+  if (role !== "admin") {
+    router.replace("/unauthorized");
+    return;
+  }
+
+  setAuthorized(true);
+}, [router]);
 
   // =====================
   // FETCH CATEGORIES
@@ -202,6 +224,10 @@ const handleSave = async () => {
     alert("Server Error");
   }
 };
+
+const [checkingAuth, setCheckingAuth] = useState(true);
+
+
 
 
   return (

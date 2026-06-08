@@ -38,6 +38,11 @@ export default function HomepageManagement() {
      BANNER STATE
   ======================================================== */
 
+  // =========================
+// 🔐 ADMIN CHECK
+// =========================
+
+
   const [banners, setBanners] = useState<Banner[]>([]);
   const [bannerName, setBannerName] = useState("");
   const [bannerLink, setBannerLink] = useState("");
@@ -77,6 +82,15 @@ export default function HomepageManagement() {
   const loadHomepageData = async () => {
     await Promise.all([getBanners(), getCategories()]);
   };
+
+  useEffect(() => {
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
+
+  if (!token || role !== "admin") {
+    window.location.href = "/admin/login";
+  }
+}, []);
 
   /* ========================================================
      DATA FETCHING
