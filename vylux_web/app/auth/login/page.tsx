@@ -50,9 +50,9 @@ export default function LoginPage() {
 
       // save JWT token
       
-
-      localStorage.setItem("token", data.token);
+ localStorage.setItem("token", data.token);
 localStorage.setItem("user", JSON.stringify(data.user));
+localStorage.setItem("role", data.user.role);
 
 alert("Login Successful");
 
