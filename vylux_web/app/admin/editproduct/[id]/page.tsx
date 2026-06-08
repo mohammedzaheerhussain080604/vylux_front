@@ -17,75 +17,67 @@ type Variant = {
   stock: string;
 };
 
-type NewVariant = Omit<Variant, "id">;
-
-
-
 const API = "https://vylux-front.onrender.com/api/vylux";
 
 export default function EditProduct() {
-  // =====================
-  // ROUTE PARAM
-  // =====================
   const params = useParams();
   const productId = params?.id as string | undefined;
   const isEdit = Boolean(productId);
 
-  // =====================
-  // PAGE CONTROL
-  // =====================
   const [page, setPage] = useState<"info" | "specs">("info");
 
-  // =====================
-  // BASIC INFO
-  // =====================
   const [productName, setProductName] = useState("");
   const [modelNumber, setModelNumber] = useState("");
 
-  // =====================
-  // CATEGORY
-  // =====================
   const [category, setCategory] = useState<number | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
 
-  // =====================
-  // IMAGES
-  // =====================
   const [mainImage, setMainImage] = useState("");
   const [gallery, setGallery] = useState<string[]>([]);
   const [mainImageFile, setMainImageFile] = useState<File | null>(null);
   const [galleryFiles, setGalleryFiles] = useState<File[]>([]);
   const [preview, setPreview] = useState<string | null>(null);
 
-  // =====================
-  // WARRANTY
-  // =====================
   const [warranty, setWarranty] = useState("");
 
-  // =====================
-  // TECH SPECS
-  // =====================
   const [power, setPower] = useState("");
   const [colorTemperature, setColorTemperature] = useState("");
   const [ratedVoltage, setRatedVoltage] = useState("");
   const [operatingVoltage, setOperatingVoltage] = useState("");
   const [averageLife, setAverageLife] = useState("");
 
-  // =====================
-  // VARIANTS
-  // =====================
   const [variants, setVariants] = useState<Variant[]>([]);
   const [variantWatt, setVariantWatt] = useState("");
   const [price, setPrice] = useState("");
   const [moq, setMoq] = useState("");
   const [stock, setStock] = useState("");
 
-  // =====================
-  // FETCH CATEGORIES
-  // =====================
+  const [isEditing, setIsEditing] = useState(false);
+
+  // =========================
+  // 🔐 ADMIN CHECK (NO EXTRA FUNCTION)
+  // =========================
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      window.location.href = "/admin/login";
+    }
+  }, []);
+
+  // =========================
+  // FETCH CATEGORIES (SECURED)
+  // =========================
   useEffect(() => {
     const fetchCategories = async () => {
-      const res = await fetch(`${API}/home/categories`);
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(`${API}/home/categories`, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      });
+
       const data = await res.json();
       setCategories(Array.isArray(data) ? data : []);
     };
@@ -93,14 +85,21 @@ export default function EditProduct() {
     fetchCategories();
   }, []);
 
-  // =====================
-  // FETCH PRODUCT (EDIT)
-  // =====================
+  // =========================
+  // FETCH PRODUCT (SECURED)
+  // =========================
   useEffect(() => {
     if (!productId) return;
 
     const fetchProduct = async () => {
-      const res = await fetch(`${API}/products/${productId}`);
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(`${API}/products/${productId}`, {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      });
+
       const data = await res.json();
 
       const product = data.product;
@@ -119,25 +118,23 @@ export default function EditProduct() {
       setMainImage(product.main_image || "");
       setGallery(data.images || []);
 
-     setVariants(
-  (data.variants || []).map((v: any) => ({
-    id: Number(v.id),
-    watt: v.watt,
-    price: v.price,
-    moq: v.moq,
-    stock: v.stock,
-  }))
-);
+      setVariants(
+        (data.variants || []).map((v: any) => ({
+          id: Number(v.id),
+          watt: v.watt,
+          price: v.price,
+          moq: v.moq,
+          stock: v.stock,
+        }))
+      );
     };
 
     fetchProduct();
   }, [productId]);
 
-
-  const [isEditing, setIsEditing] = useState(false);
-  // =====================
+  // =========================
   // IMAGE HANDLERS
-  // =====================
+  // =========================
   const handleMainImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -159,10 +156,7 @@ export default function EditProduct() {
     }
 
     setGalleryFiles(total);
-    setGallery((prev) => [
-      ...prev,
-      ...arr.map((f) => URL.createObjectURL(f)),
-    ]);
+    setGallery((prev) => [...prev, ...arr.map((f) => URL.createObjectURL(f))]);
   };
 
   const deleteImage = (index: number) => {
@@ -170,55 +164,55 @@ export default function EditProduct() {
     setGalleryFiles((prev) => prev.filter((_, i) => i !== index));
   };
 
-  
-
-  // =====================
+  // =========================
   // VARIANTS
-  // =====================
-const addVariant = () => {
-  if (!variantWatt || !price) return alert("Watt & Price required");
+  // =========================
+  const addVariant = () => {
+    if (!variantWatt || !price) return alert("Watt & Price required");
 
-  const newVariant: Variant = {
-    id: Date.now(), // IMPORTANT FIX
-    watt: variantWatt,
-    price,
-    moq,
-    stock,
+    const newVariant: Variant = {
+      id: Date.now(),
+      watt: variantWatt,
+      price,
+      moq,
+      stock,
+    };
+
+    setVariants((prev) => [...prev, newVariant]);
+
+    setVariantWatt("");
+    setPrice("");
+    setMoq("");
+    setStock("");
   };
 
-  setVariants((prev) => [...prev, newVariant]);
-
-  setVariantWatt("");
-  setPrice("");
-  setMoq("");
-  setStock("");
-};
-
   const editVariant = (id?: number) => {
-  if (id === undefined) return;
+    if (id === undefined) return;
 
-  const v = variants.find((x) => x.id === id);
-  if (!v) return;
+    const v = variants.find((x) => x.id === id);
+    if (!v) return;
 
-  setVariantWatt(v.watt);
-  setPrice(v.price);
-  setMoq(v.moq);
-  setStock(v.stock);
+    setVariantWatt(v.watt);
+    setPrice(v.price);
+    setMoq(v.moq);
+    setStock(v.stock);
 
-  setVariants((prev) => prev.filter((x) => x.id !== id));
-};
+    setVariants((prev) => prev.filter((x) => x.id !== id));
+  };
 
-const deleteVariant = (id?: number) => {
-  if (id === undefined) return;
+  const deleteVariant = (id?: number) => {
+    if (id === undefined) return;
 
-  setVariants((prev) => prev.filter((v) => v.id !== id));
-};
+    setVariants((prev) => prev.filter((v) => v.id !== id));
+  };
 
-  // =====================
-  // SAVE (UPDATE ONLY)
-  // =====================
+  // =========================
+  // SAVE (SECURED)
+  // =========================
   const handleSave = async () => {
     if (!productId) return alert("Invalid product");
+
+    const token = localStorage.getItem("token");
 
     const formData = new FormData();
 
@@ -235,15 +229,16 @@ const deleteVariant = (id?: number) => {
 
     if (mainImageFile) formData.append("mainImage", mainImageFile);
 
-    galleryFiles.forEach((f) =>
-      formData.append("galleryImages", f)
-    );
+    galleryFiles.forEach((f) => formData.append("galleryImages", f));
 
     formData.append("variants", JSON.stringify(variants));
 
     const res = await fetch(`${API}/products/${productId}`, {
       method: "PUT",
       body: formData,
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "",
+      },
     });
 
     const data = await res.json();
@@ -255,6 +250,8 @@ const deleteVariant = (id?: number) => {
       alert(data.message || "Update failed");
     }
   };
+
+ 
 
 
   return (

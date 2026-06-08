@@ -33,6 +33,7 @@ const API = "https://vylux-front.onrender.com/api/vylux/home";
 ========================================================== */
 
 export default function HomepageManagement() {
+
   /* ========================================================
      BANNER STATE
   ======================================================== */
@@ -83,9 +84,18 @@ export default function HomepageManagement() {
 
   const getBanners = async () => {
     try {
-      const response = await fetch(`${API}/banners`);
-      const data = await response.json();
+      const token =
+        typeof window !== "undefined"
+          ? localStorage.getItem("token")
+          : null;
 
+      const response = await fetch(`${API}/banners`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await response.json();
       setBanners(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Failed to fetch banners:", error);
@@ -94,9 +104,18 @@ export default function HomepageManagement() {
 
   const getCategories = async () => {
     try {
-      const response = await fetch(`${API}/categories`);
-      const data = await response.json();
+      const token =
+        typeof window !== "undefined"
+          ? localStorage.getItem("token")
+          : null;
 
+      const response = await fetch(`${API}/categories`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await response.json();
       setCategories(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Failed to fetch categories:", error);
@@ -137,8 +156,12 @@ export default function HomepageManagement() {
     try {
       setIsAddingBanner(true);
 
-      const formData = new FormData();
+      const token =
+        typeof window !== "undefined"
+          ? localStorage.getItem("token")
+          : null;
 
+      const formData = new FormData();
       formData.append("name", bannerName);
       formData.append("link", bannerLink);
 
@@ -148,6 +171,9 @@ export default function HomepageManagement() {
 
       const response = await fetch(`${API}/banner`, {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: formData,
       });
 
@@ -174,8 +200,16 @@ export default function HomepageManagement() {
 
   const removeBanner = async (id: number) => {
     try {
+      const token =
+        typeof window !== "undefined"
+          ? localStorage.getItem("token")
+          : null;
+
       await fetch(`${API}/banner/${id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       await getBanners();
@@ -199,8 +233,12 @@ export default function HomepageManagement() {
     try {
       setIsAddingCategory(true);
 
-      const formData = new FormData();
+      const token =
+        typeof window !== "undefined"
+          ? localStorage.getItem("token")
+          : null;
 
+      const formData = new FormData();
       formData.append("name", categoryName);
       formData.append("link", categoryLink);
 
@@ -210,6 +248,9 @@ export default function HomepageManagement() {
 
       const response = await fetch(`${API}/category`, {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: formData,
       });
 
@@ -236,8 +277,16 @@ export default function HomepageManagement() {
 
   const removeCategory = async (id: number) => {
     try {
+      const token =
+        typeof window !== "undefined"
+          ? localStorage.getItem("token")
+          : null;
+
       await fetch(`${API}/category/${id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       await getCategories();
@@ -246,6 +295,8 @@ export default function HomepageManagement() {
     }
   };
 
+
+ 
   /* ========================================================
      UI
   ======================================================== */

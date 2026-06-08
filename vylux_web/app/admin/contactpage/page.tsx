@@ -38,6 +38,11 @@ interface CallbackRequest {
   created_at: string;
 }
 
+const getToken = () => {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem("token");
+};
+
 export default function ContactAdminPage() {
   const API_URL =
     process.env.NEXT_PUBLIC_API_URL || "https://vylux-front.onrender.com";
@@ -75,6 +80,14 @@ export default function ContactAdminPage() {
   }
   return true;
 };
+
+useEffect(() => {
+  const token = getToken();
+
+  if (!token) {
+    window.location.href = "/admin/login";
+  }
+}, []);
 
 const validateContactDetails = () => {
   if (!settings.phone_number.trim()) {
@@ -138,9 +151,14 @@ const validateBusinessHours = () => {
 
   const fetchSettings = async () => {
     try {
-      const res = await axios.get(
-        `${API_URL}/api/vylux/contact/settings`
-      );
+     const res = await axios.get(
+      `${API_URL}/api/vylux/contact/settings`,
+      {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }
+    );
 
       if (res.data?.data) {
         setSettings(res.data.data);
@@ -152,9 +170,14 @@ const validateBusinessHours = () => {
 
   const fetchRequests = async () => {
     try {
-      const res = await axios.get(
-        `${API_URL}/api/vylux/contact/callback`
-      );
+       const res = await axios.get(
+      `${API_URL}/api/vylux/contact/callback`,
+      {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }
+    );
 
       setRequests(res.data?.data || []);
     } catch (error) {
@@ -162,78 +185,62 @@ const validateBusinessHours = () => {
     }
   };
 
-  const saveSettings = async () => {
-    try {
-      setLoading(true);
+ const saveSettings = async () => {
+  try {
+    setLoading(true);
 
-      const formData = new FormData();
+    const formData = new FormData();
 
-      if (bannerFile) {
-        formData.append("banner", bannerFile);
-      }
-
-      formData.append(
-        "phone_number",
-        settings.phone_number
-      );
-
-      formData.append(
-        "whatsapp_number",
-        settings.whatsapp_number
-      );
-
-      formData.append("email", settings.email);
-
-      formData.append("address", settings.address);
-
-      formData.append("map_url", settings.map_url);
-
-      formData.append(
-        "working_days",
-        settings.working_days
-      );
-
-      formData.append(
-        "opening_time",
-        settings.opening_time
-      );
-
-      formData.append("gst_number", settings.gst_number);
-
-      formData.append(
-        "closing_time",
-        settings.closing_time
-      );
-
-      await axios.post(
-        `${API_URL}/api/vylux/contact/settings`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      alert("Contact settings saved");
-      fetchSettings();
-    } catch (error) {
-      console.error(error);
-      alert("Failed to save settings");
-    } finally {
-      setLoading(false);
+    if (bannerFile) {
+      formData.append("banner", bannerFile);
     }
-  };
+
+    formData.append("phone_number", settings.phone_number);
+    formData.append("whatsapp_number", settings.whatsapp_number);
+    formData.append("email", settings.email);
+    formData.append("address", settings.address);
+    formData.append("map_url", settings.map_url);
+    formData.append("working_days", settings.working_days);
+    formData.append("opening_time", settings.opening_time);
+    formData.append("gst_number", settings.gst_number);
+    formData.append("closing_time", settings.closing_time);
+
+    await axios.post(
+      `${API_URL}/api/vylux/contact/settings`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    alert("Contact settings saved");
+    fetchSettings();
+  } catch (error) {
+    console.error(error);
+    alert("Failed to save settings");
+  } finally {
+    setLoading(false);
+  }
+};
 
   const updateStatus = async (
     id: number,
     status: string
   ) => {
     try {
-      await axios.put(
-        `${API_URL}/api/vylux/contact/callback/${id}`,
-        { status }
-      );
+      
+       await axios.put(
+      `${API_URL}/api/vylux/contact/callback/${id}`,
+      { status },
+      {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }
+    );
 
       fetchRequests();
     } catch (error) {

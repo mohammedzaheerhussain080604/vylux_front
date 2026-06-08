@@ -41,6 +41,31 @@ export default function AdminOrders() {
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
   /* ================= FETCH ORDERS ================= */
+const getToken = () => {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem("token");
+};
+
+const getRole = () => {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem("role");
+};
+
+useEffect(() => {
+  const token = getToken();
+  const role = getRole();
+
+  if (!token) {
+    window.location.href = "/admin/login";
+    return;
+  }
+
+  if (role !== "admin") {
+    window.location.href = "/unauthorized";
+    return;
+  }
+}, []);
+  
   useEffect(() => {
     const fetchOrders = async () => {
       try {

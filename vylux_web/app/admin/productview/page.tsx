@@ -45,6 +45,22 @@ export default function Productview() {
 
   const router = useRouter();
 
+  // ================= ADMIN PROTECTION (IMPORTANT) =================
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+
+    if (!token) {
+      window.location.replace("/admin/login");
+      return;
+    }
+
+    if (role !== "admin") {
+      window.location.replace("/unauthorized");
+      return;
+    }
+  }, []);
+
   useEffect(() => {
     fetchCategories();
     fetchProducts();
@@ -70,29 +86,29 @@ export default function Productview() {
     }
   };
 
-  // ================= ADD ONLY THIS (DELETE) =================
-const handleDelete = async (id: number) => {
-  const ok = confirm("Delete this product?");
-  if (!ok) return;
+  // ================= DELETE =================
+  const handleDelete = async (id: number) => {
+    const ok = confirm("Delete this product?");
+    if (!ok) return;
 
-  try {
-    const res = await fetch(`${API}/products/${id}`, {
-      method: "DELETE",
-    });
+    try {
+      const res = await fetch(`${API}/products/${id}`, {
+        method: "DELETE",
+      });
 
-    if (!res.ok) throw new Error("Delete failed");
+      if (!res.ok) throw new Error("Delete failed");
 
-    setProducts((prev) => prev.filter((p) => p.id !== id));
-  } catch (err) {
-    console.error(err);
-    alert("Failed to delete product");
-  }
-};
+      setProducts((prev) => prev.filter((p) => p.id !== id));
+    } catch (err) {
+      console.error(err);
+      alert("Failed to delete product");
+    }
+  };
 
-  // ================= ADD ONLY THIS (EDIT) =================
+  // ================= EDIT =================
   const handleEdit = (id: number) => {
-  router.push(`/admin/editproduct/${id}`);
-};
+    router.push(`/admin/editproduct/${id}`);
+  };
 
   const filteredProducts = products
     .filter((p) =>
@@ -105,12 +121,13 @@ const handleDelete = async (id: number) => {
     )
     .sort((a, b) => {
       const aPrice = Number(a.variants?.[0]?.price ?? 0);
-const bPrice = Number(b.variants?.[0]?.price ?? 0);
+      const bPrice = Number(b.variants?.[0]?.price ?? 0);
 
       if (sort === "low-high") return aPrice - bPrice;
       if (sort === "high-low") return bPrice - aPrice;
       return 0;
     });
+
 
   return (
     <div className={styles.cont}>

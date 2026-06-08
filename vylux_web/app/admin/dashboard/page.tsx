@@ -35,32 +35,58 @@ interface DashboardData {
   recentOrders: Order[];
 }
 
+// =====================
+// TOKEN HELPER
+// =====================
+const getToken = () => {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem("token");
+};
+
 export default function DashboardPage() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // =====================
+  // ADMIN GUARD
+  // =====================
+  useEffect(() => {
+    const token = getToken();
+
+    if (!token) {
+      window.location.href = "/admin/login";
+    }
+  }, []);
+
   useEffect(() => {
     const load = async () => {
-      try {
-        const token = localStorage.getItem("token");
+      const token = getToken();
+      if (!token) return;
 
+      try {
         const res = await fetch(
           "https://vylux-front.onrender.com/api/vylux/dashboard/stats",
           {
             headers: {
-              Authorization: token ? `Bearer ${token}` : "",
+              Authorization: `Bearer ${token}`,
             },
           }
         );
 
         const json = await res.json();
 
-        if (!json.success) throw new Error("Dashboard failed");
+        if (!json.success) {
+          throw new Error("Dashboard failed");
+        }
 
         setData(json);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("Something went wrong");
+        }
       } finally {
         setLoading(false);
       }
@@ -83,7 +109,7 @@ export default function DashboardPage() {
         <p>Business Overview Panel</p>
       </div>
 
-      {/* KPI GRID (8 BOXES) */}
+      {/* KPI GRID */}
       <div className={styles.kpiGrid}>
         <div className={styles.card}>Users <b>{s.users}</b></div>
         <div className={styles.card}>Products <b>{s.products}</b></div>
@@ -120,12 +146,6 @@ export default function DashboardPage() {
       <div className={styles.section}>
         <h2>Low Selling Products</h2>
         <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Model</th>
-            </tr>
-          </thead>
           <tbody>
             {data.lowProducts.map((p) => (
               <tr key={p.id}>
@@ -137,7 +157,7 @@ export default function DashboardPage() {
         </table>
       </div>
 
-      {/* RECENT ORDERS (ONLY SCROLL AREA) */}
+      {/* RECENT ORDERS */}
       <div className={styles.section}>
         <h2>Recent Orders</h2>
 

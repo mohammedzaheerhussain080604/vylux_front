@@ -57,16 +57,19 @@ export default function AddProduct() {
   // =====================
   useEffect(() => {
     const fetchCategories = async () => {
-      try {
-        const res = await fetch(
-          "https://vylux-front.onrender.com/api/vylux/home/categories"
-        );
-        const data = await res.json();
-        setCategories(data);
-      } catch (err) {
-        console.error("Category fetch failed", err);
-      }
-    };
+  try {
+    const res = await fetch(
+      "https://vylux-front.onrender.com/api/vylux/home/categories"
+    );
+
+    if (!res.ok) throw new Error("Failed to fetch categories");
+
+    const data = await res.json();
+    setCategories(Array.isArray(data) ? data : []);
+  } catch (err) {
+    console.error("Category fetch failed", err);
+  }
+};
 
     fetchCategories();
   }, []);
@@ -74,120 +77,108 @@ export default function AddProduct() {
   // =====================
   // SAVE PRODUCT
   // =====================
-  const handleSave = async () => {
-    try {
-      // VALIDATION
-      if (!productName.trim())
-        return alert("Product Name required");
+const handleSave = async () => {
+  try {
+    // VALIDATION
+    if (!productName.trim())
+      return alert("Product Name required");
 
-      if (!modelNumber.trim())
-        return alert("Model Number required");
+    if (!modelNumber.trim())
+      return alert("Model Number required");
 
-      if (!categoryId)
-        return alert("Category required");
+    if (!categoryId)
+      return alert("Category required");
 
-      if (!mainImageFile)
-        return alert("Main Image required");
+    if (!mainImageFile)
+      return alert("Main Image required");
 
-      const selectedCategory = categories.find(
-        (c) => c.id === categoryId
-      );
+    const selectedCategory = categories.find(
+      (c) => c.id === categoryId
+    );
 
-      if (!selectedCategory)
-        return alert("Invalid Category");
+    if (!selectedCategory)
+      return alert("Invalid Category");
 
-      const formData = new FormData();
+    const formData = new FormData();
 
-      // BASIC
-      formData.append("name", productName);
-      formData.append("model", modelNumber);
-      formData.append("category", String(categoryId));
-      // SPECS
-      formData.append("powerConsumption", power);
-      formData.append("colorTemperature", colorTemperature);
-      formData.append("ratedVoltage", ratedVoltage);
-      formData.append("operatingVoltage", operatingVoltage);
-      formData.append("averageLife", averageLife);
-      formData.append("warranty", warranty);
+    // BASIC
+    formData.append("name", productName);
+    formData.append("model", modelNumber);
+    formData.append("category", String(categoryId));
 
-      // IMAGES
-      formData.append("mainImage", mainImageFile);
+    // SPECS
+    formData.append("powerConsumption", power);
+    formData.append("colorTemperature", colorTemperature);
+    formData.append("ratedVoltage", ratedVoltage);
+    formData.append("operatingVoltage", operatingVoltage);
+    formData.append("averageLife", averageLife);
+    formData.append("warranty", warranty);
 
-      galleryFiles.forEach((file) => {
-        formData.append("galleryImages", file);
-      });
+    // IMAGES
+    formData.append("mainImage", mainImageFile);
 
-      // VARIANTS
-      formData.append(
-        "variants",
-        JSON.stringify(
-          variants.map((v) => ({
-            watt: v.watt,
-            price: v.price,
-            moq: v.moq,
-            stock: v.stock,
-          }))
-        )
-      );
+    galleryFiles.forEach((file) => {
+      formData.append("galleryImages", file);
+    });
 
-      const res = await fetch(
-        "https://vylux-front.onrender.com/api/vylux/products",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+    // VARIANTS
+    formData.append(
+      "variants",
+      JSON.stringify(
+        variants.map((v) => ({
+          watt: v.watt,
+          price: v.price,
+          moq: v.moq,
+          stock: v.stock,
+        }))
+      )
+    );
 
-      const data = await res.json();
+    // ✅ FIX: ADD TOKEN HERE (THIS WAS MISSING)
+    const token =
+      typeof window !== "undefined"
+        ? localStorage.getItem("token")
+        : null;
 
-      if (!res.ok) {
-        return alert(data.message || "Save failed");
+    const res = await fetch(
+      "https://vylux-front.onrender.com/api/vylux/products",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
       }
+    );
 
-      alert("Product Created Successfully");
+    const data = await res.json();
 
-      // RESET
-      setProductName("");
-      setModelNumber("");
-      setCategoryId(null);
-
-      setMainImageFile(null);
-      setGalleryFiles([]);
-
-      setPower("");
-      setColorTemperature("");
-      setRatedVoltage("");
-      setOperatingVoltage("");
-      setAverageLife("");
-      setWarranty("");
-
-      setVariants([]);
-    } catch (err) {
-      console.error(err);
-      alert("Server Error");
+    if (!res.ok) {
+      return alert(data.message || "Save failed");
     }
-  };
 
-  const addVariant = () => {
-  if (!variantWatt || !price) {
-    alert("Watt and Price required");
-    return;
+    alert("Product Created Successfully");
+
+    // RESET
+    setProductName("");
+    setModelNumber("");
+    setCategoryId(null);
+
+    setMainImageFile(null);
+    setGalleryFiles([]);
+
+    setPower("");
+    setColorTemperature("");
+    setRatedVoltage("");
+    setOperatingVoltage("");
+    setAverageLife("");
+    setWarranty("");
+
+    setVariants([]);
+  } catch (err) {
+    console.error(err);
+    alert("Server Error");
   }
-
-  const newVariant = {
-    id: Date.now(),
-    watt: variantWatt,
-    price,
-    moq,
-    stock,
-  };
-
-  setVariants((prev) => [...prev, newVariant]);
-
-  setVariantWatt("");
-  setPrice("");
-  setMoq("");
-  setStock("");
 };
 
 
