@@ -13,34 +13,52 @@ import { verifyToken, isAdmin } from "../../middleware/auth.middleware.js";
 const router = express.Router();
 
 /* =========================================================
-   ADMIN ROUTES (PUT THESE FIRST - VERY IMPORTANT)
+   ADMIN ROUTES
 ========================================================= */
 
 // Get ALL orders (admin only)
-router.get("/admin/all", verifyToken, isAdmin, getAllOrders);
+router.get(
+  "/admin/all",
+  verifyToken,
+  isAdmin,
+  getAllOrders
+);
 
 // Get SINGLE order (admin only)
-router.get("/admin/:id", verifyToken, isAdmin, getOrderById);
+router.get(
+  "/admin/:id",
+  verifyToken,
+  isAdmin,
+  getOrderById
+);
 
 // UPDATE order status (admin only)
-router.put("/admin/:id/status", verifyToken, isAdmin, updateOrderStatus);
+router.put(
+  "/admin/:id/status",
+  verifyToken,
+  isAdmin,
+  updateOrderStatus
+);
 
 // DELETE order (admin only)
-router.delete("/admin/:id", verifyToken, isAdmin, deleteOrder);
-
+router.delete(
+  "/admin/:id",
+  verifyToken,
+  isAdmin,
+  deleteOrder
+);
 
 /* =========================================================
    USER ROUTES
 ========================================================= */
 
-// Create order (user/wholesaler)
+// Create order
 router.post("/", verifyToken, createOrder);
 
 // Get logged-in user orders
 router.get("/my-orders", verifyToken, getMyOrders);
 
-// Get single order (user view)
+// Get single order (USER OWN ORDER ONLY - MUST BE CHECKED IN CONTROLLER)
 router.get("/:id", verifyToken, getOrderById);
-
 
 export default router;
