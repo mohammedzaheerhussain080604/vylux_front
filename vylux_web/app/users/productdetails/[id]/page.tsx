@@ -348,7 +348,7 @@ Quantity: ${qty}
 Total: ₹${total}`;
 
               window.open(
-                `https://wa.me/919790051137?text=${encodeURIComponent(
+                `https://wa.me/917358433622?text=${encodeURIComponent(
                   message
                 )}`,
                 "_blank"
