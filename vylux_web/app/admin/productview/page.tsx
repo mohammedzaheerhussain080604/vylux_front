@@ -46,20 +46,27 @@ export default function Productview() {
   const router = useRouter();
 
   // ================= ADMIN PROTECTION (IMPORTANT) =================
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const role = localStorage.getItem("role");
+ useEffect(() => {
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
 
-    if (!token) {
-      window.location.replace("/admin/login");
-      return;
-    }
+  console.log("TOKEN:", token);
+  console.log("ROLE:", role);
 
-    if (role !== "admin") {
-      window.location.replace("/unauthorized");
-      return;
-    }
-  }, []);
+  if (!token) {
+    console.log("No token found");
+    window.location.replace("/admin/login");
+    return;
+  }
+
+  if (role !== "admin") {
+    console.log("Role is not admin:", role);
+    window.location.replace("/unauthorized");
+    return;
+  }
+
+  console.log("Admin authenticated");
+}, []);
 
   useEffect(() => {
     fetchCategories();
