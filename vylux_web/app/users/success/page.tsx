@@ -71,13 +71,7 @@ const OrderSuccess: React.FC = () => {
             </h3>
           </div>
 
-          <div className={styles.detailBlockRight}>
-            <span className={styles.label}>Date & Time</span>
-            <h3 className={styles.dateValue}>
-              {formattedDate || "N/A"}
-            </h3>
-          </div>
-        </div>
+          
 
         {/* Contact */}
         <div className={styles.actions}>
