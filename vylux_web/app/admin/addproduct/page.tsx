@@ -74,6 +74,28 @@ export default function AddProduct() {
     fetchCategories();
   }, []);
 
+  const addVariant = () => {
+  if (!variantWatt || !price || !moq || !stock) {
+    alert("All variant fields are required");
+    return;
+  }
+
+  const newVariant: Variant = {
+    id: Date.now(),
+    watt: variantWatt,
+    price,
+    moq,
+    stock,
+  };
+
+  setVariants((prev) => [...prev, newVariant]);
+
+  setVariantWatt("");
+  setPrice("");
+  setMoq("");
+  setStock("");
+};
+
   // =====================
   // SAVE PRODUCT
   // =====================
